@@ -1,11 +1,13 @@
 package ToDo;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+//import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Add {
@@ -14,16 +16,16 @@ public class Add {
         PrintStream original = System.out;
         String fileName = getFileName();
         String data = getListText();
-        String title = fileName + ".txt";
+        String listTitle = fileName + ".txt";
 
-        displayFileTitleLocation(title);
-        createFolderSaveFile(title);
-        addListTextToFile(data, title);
+        displayFileTitleLocation(listTitle);
+        createFolderSaveFile(listTitle);
+        addListTextToFile(data, listTitle);
 
         System.setOut(original);
     }
 
-    private static void createFolderSaveFile(String title) throws FileNotFoundException {
+    private static void createFolderSaveFile(String listTitle) throws FileNotFoundException {
         try {
             Files.createDirectories(Paths.get("C:\\ToDoList_SavedFiles\\"));
         } catch (IOException e) {
@@ -32,17 +34,17 @@ public class Add {
         }
 
         PrintStream out = new PrintStream(
-                new FileOutputStream("C:\\ToDoList_SavedFiles\\" + title));
+                new FileOutputStream("C:\\ToDoList_SavedFiles\\" + listTitle));
         System.setOut(out);
     }
 
-    private static void addListTextToFile(String data, String title) throws FileNotFoundException {
-        PrintStream writeToFile = new PrintStream("C:\\ToDoList_SavedFiles\\" + title);
+    private static void addListTextToFile(String data, String listTitle) throws FileNotFoundException {
+        PrintStream writeToFile = new PrintStream("C:\\ToDoList_SavedFiles\\" + listTitle);
         writeToFile.append(data);
     }
 
-    private static void displayFileTitleLocation(String title) {
-        System.out.println("ToDo List File:  " + title + "  saved at  C:\\ToDoList_SavedFiles\\");
+    private static void displayFileTitleLocation(String listTitle) {
+        System.out.println("ToDo List File:  " + listTitle + "  saved at  C:\\ToDoList_SavedFiles\\");
     }
 
     private static String getListText() {
@@ -59,5 +61,49 @@ public class Add {
         String fileName;
         fileName = ss.nextLine();
         return fileName;
+    }
+
+    public static void createFirstList() {
+        ArrayList<ToDoItem> firstList = new ArrayList<ToDoItem>() {
+            {
+                new ToDoItem("task1", LocalDate.of(2021, 01, 01), false, false);
+            }
+
+            {
+                new ToDoItem("task2", LocalDate.of(2021, 02, 02), false, false);
+            }
+
+            {
+                new ToDoItem("task3", LocalDate.of(2021, 03, 03), false, false);
+            }
+        };
+
+        writeListToFile(firstList);
+
+
+    }
+
+    private static void writeListToFile(ArrayList<ToDoItem> taskList) {
+        ObjectMapper obj = new ObjectMapper();
+        String json = null;
+        try {
+            json = obj.writeValueAsString(taskList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FileWriter file = null;
+        try {
+            file = new FileWriter("C:\\ToDoList_SavedFiles\\firstlist.json");
+            file.write(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                file.flush();
+                file.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

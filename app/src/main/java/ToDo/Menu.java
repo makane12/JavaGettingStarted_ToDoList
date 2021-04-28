@@ -39,7 +39,7 @@ public class Menu {
 //                Add a ToDo List
                 System.out.println(input + " was returned - ADD");
                 try {
-                    Add.addToDoList();
+                    Add.createFirstList();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

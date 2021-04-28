@@ -7,12 +7,12 @@ import java.util.Scanner;
 public class Display {
     public static void displayToDoList() {
         String fileToOpen = getFileName();
-        String title = fileToOpen + ".txt";
+        String titleDisplay  = fileToOpen + ".txt";
 
         System.out.println("\n");
-        System.out.println("Displaying ToDoList for " + title + ":");
+        System.out.println("Displaying ToDoList for " + titleDisplay + ":");
         try {
-            showFileChosen(title);
+            showFileChosen(titleDisplay);
         } catch (Exception e) {
             System.out.println("File name not found. Returning to Main Menu.");
             CallMainMenu.returnToMainMenu();

@@ -11,4 +11,9 @@ class AppTest {
         App classUnderTest = new App();
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
     }
+
+//https://www.parasoft.com/junit-tutorial-setting-up-writing-and-running-java-unit-tests/
+//https://blog.jetbrains.com/idea/2020/09/writing-tests-with-junit-5/
+
+
 }

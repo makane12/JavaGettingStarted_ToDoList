@@ -10,15 +10,15 @@ public class Edit {
     public static void editToDoList() throws FileNotFoundException {
         PrintStream original = System.out;
         String fileToOpen = getFileName();
-        String title = fileToOpen + ".txt";
+        String titleEdit = fileToOpen + ".txt";
 
-        showFileChosen(title);
+        showFileChosen(titleEdit);
 
         String newToDoText;
-        newToDoText = enterNewToDoText(title);
+        newToDoText = enterNewToDoText(titleEdit);
 
-        updateToDoText(newToDoText, title);
-        displayFileTitleLocation(title);
+        updateToDoText(newToDoText, titleEdit);
+        displayFileTitleLocation(titleEdit);
 
         System.setOut(original);
     }
